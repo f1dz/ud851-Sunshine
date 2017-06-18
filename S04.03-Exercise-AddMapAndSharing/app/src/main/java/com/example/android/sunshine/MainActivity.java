@@ -219,10 +219,24 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             mForecastAdapter.setWeatherData(null);
             loadWeatherData();
             return true;
+        }else if (id == R.id.action_open_map){
+            String address = "Selokarto, Jawa Tengah, Indonesia";
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("geo")
+                    .path("0,0")
+                    .appendQueryParameter("q", address);
+            Uri uri = builder.build();
+            showMap(uri);
+            return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
-
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showMap(Uri uri){
+        Intent intent =  new Intent(Intent.ACTION_VIEW, uri);
+        if(intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }
     }
 }
